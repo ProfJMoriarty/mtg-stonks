@@ -1,0 +1,3 @@
+DATABASE_USER: '<your application db username here>'
+DATABASE_PW: '<your application db password here>'
+SECRET_KEY_BASE: '<run rails secret and paste here>'
