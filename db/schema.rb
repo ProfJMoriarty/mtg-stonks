@@ -12,7 +12,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 0) do
+ActiveRecord::Schema[7.1].define(version: 20_240_227_234_041) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
+
+  create_table 'cards', force: :cascade do |t|
+    t.string 'name'
+    t.string 'oracle_id'
+    t.json 'prices'
+    t.integer 'playability_index', default: 0
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
 end

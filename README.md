@@ -31,5 +31,5 @@ create user your_applciation_db_user_name_here with createdb login encrypted pas
 and finally
 
 ```bash
-rails db:setup
+rails db:prepare
 ```
