@@ -20,8 +20,8 @@ ActiveRecord::Schema[7.1].define(version: 20_240_227_234_041) do
     t.string 'name'
     t.string 'oracle_id'
     t.json 'prices'
-    t.integer 'playability_index', default: 0
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.json 'playability'
   end
 end

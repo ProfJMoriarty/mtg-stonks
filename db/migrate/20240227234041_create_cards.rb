@@ -4,7 +4,7 @@ class CreateCards < ActiveRecord::Migration[7.1]
       t.string :name
       t.string :oracle_id
       t.json :prices
-      t.integer :playability_index, default: 0
+      t.json :playability
 
       t.timestamps
     end

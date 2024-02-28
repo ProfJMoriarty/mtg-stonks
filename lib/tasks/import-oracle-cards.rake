@@ -11,7 +11,7 @@ namespace :import do
 
     new_cards = 0
     cards.each do |card|
-      # Also very slow... ~130s for no now cards.
+      # Also very slow... ~130s for no new cards, ~155s for all new cards.
       Card.where(oracle_id: card['oracle_id']).first_or_create do |nc|
         nc.name = card['name']
         nc.prices = card['prices']
