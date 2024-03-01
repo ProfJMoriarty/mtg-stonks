@@ -4,29 +4,17 @@
 #
 # Table name: cards
 #
-#  id          :bigint           not null, primary key
-#  name        :string
-#  oracle_id   :string
-#  prices      :json
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  playability :json
+#  id         :bigint           not null, primary key
+#  name       :string
+#  oracle_id  :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 class Card < ApplicationRecord
-  def usd
-    prices['usd']
-  end
-
-  def eur
-    prices['eur']
-  end
-
-  def tix
-    prices['tix']
-  end
+  has_many :price_entries, dependent: :destroy
+  has_many :pscore_entries, dependent: :destroy
 
   def stonks(format)
     # smth like this but with more data science
-    eur / playability[format.to_s]
   end
 end

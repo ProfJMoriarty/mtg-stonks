@@ -1,16 +1,18 @@
 # == Schema Information
 #
-# Table name: cards
+# Table name: price_entries
 #
 #  id         :bigint           not null, primary key
-#  name       :string
-#  oracle_id  :string
+#  usd        :float
+#  eur        :float
+#  tix        :float
+#  card_id    :bigint
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 require 'test_helper'
 
-class CardTest < ActiveSupport::TestCase
+class PriceEntryTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
