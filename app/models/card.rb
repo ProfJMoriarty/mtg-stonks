@@ -11,6 +11,7 @@
 #  updated_at :datetime         not null
 #
 class Card < ApplicationRecord
+  self.primary_key = :oracle_id
   has_many :price_entries, dependent: :destroy
   has_many :pscore_entries, dependent: :destroy
 

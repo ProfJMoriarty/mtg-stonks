@@ -6,7 +6,7 @@ require 'open-uri'
 namespace :import do
   desc 'Import json bulk data'
   task bulk_data: :environment do
-    puts '=== Importing from json dump ==='
+    Rails.logger.info "=== Importing from json dump ==="
 
     res = HTTParty.get('https://api.scryfall.com/bulk-data')
     dumps = JSON.parse(res.body)['data']
@@ -14,25 +14,34 @@ namespace :import do
 
     file = File.read URI.open(file_path) # rubocop:disable Security/Open
 
-    # TODO: Loading the whole ~ 145MB into mem is a medium/bad idea, find smth else.
-    parsed_cards = JSON.parse file
-
-    puts "Parsed #{parsed_cards.count} cards. Importing new ones..."
+    batch_size = 2_000
     start_time = Time.now
 
-    new_cards = 0
-    parsed_cards.each do |parsed_card|
-      # Also very slow... ~350s
-      card_obj = Card.where(oracle_id: parsed_card['oracle_id']).first_or_create do |nc|
-        nc.name = parsed_card['name']
-        new_cards += 1
+    json_cards = JSON.parse file
+    Rails.logger.info "Parsed #{json_cards.count} cards. Importing new ones..."
+
+    shortened_cards = json_cards.map{|c| {oracle_id: c['oracle_id'], name: c['name']}}
+    price_json = json_cards.map{|c| {oracle_id: c['oracle_id'], prices: c['prices']}}
+    Card.upsert_all(
+      shortened_cards
+    )
+    Rails.logger.info "Imported #{shortened_cards.count} cards"
+
+    Rails.logger.info "Updating prices for cards"
+    price_json.each_slice(batch_size) do |parsed_cards|
+      price_count = 0
+      card_prices = []
+      parsed_cards.each do |parsed_card|
+        card_obj = Card.find_by(oracle_id: parsed_card[:oracle_id])
+
+        prices = parsed_card[:prices]
+        card_prices << {card_id: card_obj.id, eur: prices['eur'], usd: prices['usd'], tix: prices['tix']}
+        price_count +=1
       end
-
-      prices = parsed_card['prices']
-      PriceEntry.create(card: card_obj, eur: prices['eur'], usd: prices['usd'], tix: prices['tix'])
+      PriceEntry.insert_all(card_prices)
+      Rails.logger.info "Imported prices for batch of #{price_count} cards"
     end
-
-    puts "Done in #{Time.now - start_time}s. Imported #{new_cards} new cards."
+    Rails.logger.info "Done in #{Time.now - start_time}s. Imported #{shortened_cards.count} new cards in total."
   end
 
   # TODO: add tasks to this namespace that do this with the scryfall api and not a fixture
