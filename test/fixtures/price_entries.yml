@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: price_entries
+#
+#  id         :bigint           not null, primary key
+#  usd        :float
+#  eur        :float
+#  tix        :float
+#  card_id    :bigint
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+one:
+  usd: 1.5
+  eur: 1.5
+  tix: 1.5
+
+two:
+  usd: 1.5
+  eur: 1.5
+  tix: 1.5

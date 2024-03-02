@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: cards
+#
+#  id         :bigint           not null, primary key
+#  name       :string
+#  oracle_id  :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+one:
+  name: 'Lightning Bolt'
+  oracle_id: 'some large hash'
+  prices: 
+  playability_index: 100
+
+two:
+  name: 'Birds of Paradise'
+  oracle_id: 'some equally large hash'
+  prices: 
+  playability_index: 99
