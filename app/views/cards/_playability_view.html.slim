@@ -1,0 +1,14 @@
+.card.flex.justify-between.align-center
+  .name.flex.align-center
+    .mr-1rem = render 'shared/score_ticker_box', context: "##{index + 1}", delta: card.overall_score_trend, score: card.rank
+    = card.name
+  .scores.flex
+    = render 'shared/score_ticker_box', context: 'Standard', delta: card.format_score_trend(format: :standard), score: card.format_score(format: :standard)
+    = render 'shared/score_ticker_box', context: 'Pioneer', delta: card.format_score_trend(format: :pioneer), score: card.format_score(format: :pioneer)
+    = render 'shared/score_ticker_box', context: 'Modern', delta: card.format_score_trend(format: :modern), score: card.format_score(format: :modern)
+    = render 'shared/score_ticker_box', context: 'Pauper', delta: card.format_score_trend(format: :pauper), score: card.format_score(format: :pauper)
+    = render 'shared/score_ticker_box', context: 'Legacy', delta: card.format_score_trend(format: :legacy), score: card.format_score(format: :legacy)
+  .prices.flex
+    = render 'shared/price_ticker_box', context: '€', delta: card.currency_price_trend(currency: :eur), score: card.latest_prices.eur
+    = render 'shared/price_ticker_box', context: '$', delta: card.currency_price_trend(currency: :usd), score: card.latest_prices.usd
+    = render 'shared/price_ticker_box', context: 'tix', delta: card.currency_price_trend(currency: :tix), score: card.latest_prices.tix

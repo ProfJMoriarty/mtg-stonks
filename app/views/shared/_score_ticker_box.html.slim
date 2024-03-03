@@ -1,0 +1,6 @@
+.delta-tag 
+  = context
+  .flex.gap-0
+    span class=(delta_color(score_delta_tag(delta)))
+      = score_delta_tag(delta)
+    span = scoretag(score)
