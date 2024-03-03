@@ -24,6 +24,10 @@
     align-items: center;
 }
 
+.align-start {
+    align-items: flex-start;
+}
+
 .meta {
     color: gray;
 }
@@ -38,4 +42,8 @@
 
 .mr-1rem {
     margin-right: 1rem;
+}
+
+.center-text {
+    text-align: center;
 }

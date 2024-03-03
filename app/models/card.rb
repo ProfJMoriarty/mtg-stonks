@@ -31,7 +31,7 @@ class Card < ApplicationRecord
     pscore_entries.order(created_at: :desc).take(num).last
   end
 
-  def last_n_pscores(num: 5)
+  def last_n_pscores(num: 10)
     num = num.positive? ? num : 1
     pscore_entries.order(created_at: :desc).take(num)
   end
@@ -41,10 +41,10 @@ class Card < ApplicationRecord
     scores.map { |score| score.pscore_of_format(format:) }.sum / scores.size
   end
 
-  def format_pscore_trend(format:, num: 5)
+  def format_pscore_trend(format:, num: 10)
     num = num.positive? ? num : 1
-    old_score = n_to_last_pscore(num:).read_attribute(format) || 0.0
-    newest_score = latest_pscores.read_attribute(format) || 0.0
+    old_score = n_to_last_pscore(num:).pscore_of_format(format:)
+    newest_score = latest_pscores.pscore_of_format(format:)
     old_score - newest_score
   end
 
@@ -63,15 +63,15 @@ class Card < ApplicationRecord
     price_entries.order(created_at: :desc).take(num).last
   end
 
-  def last_n_prices(num: 5)
+  def last_n_prices(num: 10)
     num = num.positive? ? num : 1
     price_entries.order(created_at: :desc).take(num)
   end
 
-  def currency_price_trend(currency:, num: 5)
+  def currency_price_trend(currency:, num: 10)
     num = num.positive? ? num : 1
-    old_price = n_to_last_price(num:).read_attribute(currency) || 0.0
-    newest_price = latest_prices.read_attribute(currency) || 0.0
+    old_price = n_to_last_price(num:).value_of_currency(currency:)
+    newest_price = latest_prices.value_of_currency(currency:)
     old_price - newest_price
   end
 

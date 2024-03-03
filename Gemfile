@@ -51,11 +51,12 @@ gem 'bootsnap', require: false
 
 gem 'sassc-rails'
 
-gem 'slim'
-
+gem 'chartkick'
+gem 'groupdate'
 gem 'httparty'
 gem 'open-uri'
 gem 'selenium-webdriver'
+gem 'slim'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

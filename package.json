@@ -2,6 +2,8 @@
     "name": "dockside-stock-market",
     "private": true,
     "dependencies": {
+        "chart.js": "^4.4.2",
+        "chartkick": "^5.0.1",
         "esbuild": "0.20.1",
         "sass": "^1.71.1",
         "yarn": "^1.22.21"
