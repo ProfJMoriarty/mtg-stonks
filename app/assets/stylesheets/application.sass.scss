@@ -1,4 +1,12 @@
 // Entry point for your Sass build
+
+@font-face {
+  font-family: "Matrix";
+  font-weight: 200;
+  font-style: normal;
+  src: url("Matrix.ttf") format("truetype");
+}
+
 @import "layout.sass.scss";
 @import "cards.sass.scss";
 @import "helpers.sass.scss";

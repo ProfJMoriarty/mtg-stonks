@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resource :cards, only: %i[index show] do
-    get 'stonks'
+  resources :cards, only: %i[index show]
+
+  controller :cards do
+    get 'stonks', :stonks
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

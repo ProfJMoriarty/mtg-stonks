@@ -40,7 +40,7 @@ class CardsController < ApplicationController
 
   def sort_for_format(format, cards)
     cards.sort do |a, b|
-      b.format_score(format:) <=> a.format_score(format:)
+      b.format_pscore(format:) <=> a.format_pscore(format:)
     end.take(10)
   end
 end

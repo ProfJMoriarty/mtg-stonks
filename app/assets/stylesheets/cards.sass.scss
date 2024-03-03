@@ -4,8 +4,24 @@
   margin-bottom: .5rem;
   border-radius: 10px;
 
+  .title {
+    font-family: 'Matrix';
+    font-size: 25pt;
+  }
+
   .name {
     width: 450px;
+
+    a.card-link {
+      text-decoration: none;
+      color: midnightblue;
+      font-family: 'Matrix';
+      font-size: 15pt;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .delta-tag {

@@ -1,13 +1,13 @@
 .card.flex.justify-between.align-center
   .name.flex.align-center
-    .mr-1rem = render 'shared/score_ticker_box', context: "##{index + 1}", delta: card.overall_score_trend, score: card.overall_stonks
-    = card.name
+    .mr-1rem = render 'shared/score_ticker_box', context: "##{index + 1}", delta: card.overall_pscore_trend, score: card.overall_stonks
+    = link_to card.name, card_path(card), class: 'card-link'
   .scores.flex
-    = render 'shared/score_ticker_box', context: 'Standard', delta: card.format_score_trend(format: :standard), score: card.format_stonks(format: :standard)
-    = render 'shared/score_ticker_box', context: 'Pioneer', delta: card.format_score_trend(format: :pioneer), score: card.format_stonks(format: :pioneer)
-    = render 'shared/score_ticker_box', context: 'Modern', delta: card.format_score_trend(format: :modern), score: card.format_stonks(format: :modern)
-    = render 'shared/score_ticker_box', context: 'Pauper', delta: card.format_score_trend(format: :pauper), score: card.format_stonks(format: :pauper)
-    = render 'shared/score_ticker_box', context: 'Legacy', delta: card.format_score_trend(format: :legacy), score: card.format_stonks(format: :legacy)
+    = render 'shared/score_ticker_box', context: 'Standard', delta: card.format_pscore_trend(format: :standard), score: card.format_stonks(format: :standard)
+    = render 'shared/score_ticker_box', context: 'Pioneer', delta: card.format_pscore_trend(format: :pioneer), score: card.format_stonks(format: :pioneer)
+    = render 'shared/score_ticker_box', context: 'Modern', delta: card.format_pscore_trend(format: :modern), score: card.format_stonks(format: :modern)
+    = render 'shared/score_ticker_box', context: 'Pauper', delta: card.format_pscore_trend(format: :pauper), score: card.format_stonks(format: :pauper)
+    = render 'shared/score_ticker_box', context: 'Legacy', delta: card.format_pscore_trend(format: :legacy), score: card.format_stonks(format: :legacy)
   .prices.flex.justify-end
     = render 'shared/price_ticker_box', context: '€', delta: card.currency_price_trend(currency: :eur), score: card.latest_prices.eur
     = render 'shared/price_ticker_box', context: '$', delta: card.currency_price_trend(currency: :usd), score: card.latest_prices.usd

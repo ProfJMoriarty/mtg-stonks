@@ -29,7 +29,7 @@ class PscoreEntry < ApplicationRecord
     (mean + median) / 2
   end
 
-  def format_pscore(format:)
+  def pscore_of_format(format:)
     read_attribute(format) || 0.0
   end
 end

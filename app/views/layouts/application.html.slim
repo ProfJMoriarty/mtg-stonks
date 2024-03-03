@@ -14,8 +14,8 @@ html
       .flex
         .title Dockside Stock Market
         .links
-          = link_to 'Playabilty', root_path, class: "item #{'active' if current_page?(controller: :cards, action: :index)}"
-          = link_to 'Stonks', stonks_cards_path, class: "item #{'active' if current_page?(controller: :cards, action: :stonks)}"
+          = link_to 'Playabilty', cards_path, class: "item #{'active' if current_page?(controller: :cards, action: :index)}"
+          = link_to 'Stonks', stonks_path, class: "item #{'active' if current_page?(controller: :cards, action: :stonks)}"
     main = yield
     footer powered by Scryfall
   
