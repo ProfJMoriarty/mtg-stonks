@@ -1,0 +1,41 @@
+.flex {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.gap-0 {
+    gap: 0;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.meta {
+    color: gray;
+}
+
+.mb-1rem {
+    margin-bottom: 1rem;
+}
+
+.mb-3rem {
+    margin-bottom: 3rem;
+}
+
+.mr-1rem {
+    margin-right: 1rem;
+}

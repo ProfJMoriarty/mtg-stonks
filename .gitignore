@@ -36,3 +36,14 @@
 
 # macos bs
 .DS_Store
+
+# Node modules
+/node_modules
+
+# railsy stuff
+/app/assets/builds/*
+!/app/assets/builds/.keep
+
+# test-data
+/db/scryfall-test-data/*.json
+!/db/scryfall-test-data/mini-test-dump.json

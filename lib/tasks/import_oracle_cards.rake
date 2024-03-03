@@ -17,8 +17,7 @@ namespace :import do
 
     file = File.read URI.open(file_path) # rubocop:disable Security/Open
 
-    import_cards_and_prices_for(JSON.parse file)
-
+    import_cards_and_prices_for(JSON.parse(file))
   end
 
   desc 'Import json bulk data from file'
@@ -26,7 +25,7 @@ namespace :import do
     Rails.logger.info '=== Importing from json dump files ==='
 
     file = File.read args[:file_path]
-    import_cards_and_prices_for(JSON.parse file)
+    import_cards_and_prices_for(JSON.parse(file))
   end
 
   def remove_non_legal_cards(json_cards)

@@ -22,7 +22,7 @@ namespace :crawl do
   task tournament_data: :environment do
     puts '=== Crawling for tournament data... ==='
 
-    todays_day = DateTime.new(2024, 3, 1).strftime('%d')
+    todays_day = DateTime.now.strftime('%d')
     puts "fetching todays (#{todays_day}) tournaments"
     todays_tournaments = []
 
