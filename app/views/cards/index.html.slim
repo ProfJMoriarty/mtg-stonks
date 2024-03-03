@@ -1,35 +1,29 @@
-h2.m-0 Most played cards
-p Most played cards across all formats
-#ranked-cards.mb-3em
+h2.center-text Most played cards across all formats
+#ranked-cards.mb-3rem
   - @most_played_cards[:all].each_with_index do |card, index|
     == render 'playability_view', card: card, index: index
 
-h2.m-0 Standard
-p Most played cards in Standard
-#standard-ranked-cards.mb-3em
+h2.center-text Standard
+#standard-ranked-cards.mb-3rem
   - @most_played_cards[:standard].each_with_index do |card, index|
       == render 'playability_view', card: card, index: index
 
-h2.m-0 Pioneer
-p Most played cards in Pioneer
-#pioneer-ranked-cards.mb-3em
+h2.center-text Pioneer
+#pioneer-ranked-cards.mb-3rem
   - @most_played_cards[:pioneer].each_with_index do |card, index|
       == render 'playability_view', card: card, index: index
 
-h2.m-0 Modern
-p Most played cards in Modern
-#modern-ranked-cards.mb-3em
+h2.center-text Modern
+#modern-ranked-cards.mb-3rem
   - @most_played_cards[:modern].each_with_index do |card, index|
       == render 'playability_view', card: card, index: index
 
-h2.m-0 Pauper
-p Most played cards in Pauper
-#pauper-ranked-cards.mb-3em
+h2.center-text Pauper
+#pauper-ranked-cards.mb-3rem
   - @most_played_cards[:pauper].each_with_index do |card, index|
       == render 'playability_view', card: card, index: index
 
-h2.m-0 Legacy
-p Most played cards in Legacy
-#legacy-ranked-cards.mb-3em
+h2.center-text Legacy
+#legacy-ranked-cards.mb-3rem
   - @most_played_cards[:legacy].each_with_index do |card, index|
       == render 'playability_view', card: card, index: index
