@@ -15,7 +15,7 @@ namespace :import do
     dumps = JSON.parse(res.body)['data']
     file_path = dumps.filter { |d| d['type'] == 'oracle_cards' }.first['download_uri']
 
-    file = File.read URI.open(file_path) # rubocop:disable Security/Open
+    file = File.read URI.open(file_path)
 
     import_cards_and_prices_for(JSON.parse(file))
   end

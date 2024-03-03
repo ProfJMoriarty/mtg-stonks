@@ -1,7 +1,7 @@
 class CardsController < ApplicationController
   before_action :set_scryfall_client, only: :show
 
-  def index # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+  def index
     # only 100 # for ui testing
     @cards = Card.with_pscore_entries.take(100)
     standard_cards = Card.with_format(:standard)
@@ -60,7 +60,7 @@ class CardsController < ApplicationController
     @scryfall_client = ScryfallApi::Client.new
   end
 
-  def prepare_pscore_graph_data(card) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+  def prepare_pscore_graph_data(card)
     all_format_pscore_data = card.last_n_pscores.map { |se| [se.created_at, (se.aggregated_pscore * 1000).round(1)] }
     standard_data = card.last_n_pscores.map do |se|
       [se.created_at, (se.pscore_of_format(format: :standard) * 1000).round(1)]
@@ -90,31 +90,7 @@ class CardsController < ApplicationController
     graph_data
   end
 
-  def prepare_stonks_graph_data(card) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
-    all_format_pscore_data = card.last_n_pscores.map { |se| [se.created_at, (se.aggregated_pscore * 1000).round(1)] }
-    standard_data = card.last_n_pscores.map do |se|
-      [se.created_at, (se.pscore_of_format(format: :standard) * 1000).round(1)]
-    end
-    pioneer_data = card.last_n_pscores.map do |se|
-      [se.created_at, (se.pscore_of_format(format: :pionner) * 1000).round(1)]
-    end
-    modern_data = card.last_n_pscores.map do |se|
-      [se.created_at, (se.pscore_of_format(format: :modern) * 1000).round(1)]
-    end
-    pauper_data = card.last_n_pscores.map do |se|
-      [se.created_at, (se.pscore_of_format(format: :pauper) * 1000).round(1)]
-    end
-    legacy_data = card.last_n_pscores.map do |se|
-      [se.created_at, (se.pscore_of_format(format: :legacy) * 1000).round(1)]
-    end
-
-    [
-      { name: 'All fomrats', data: all_format_pscore_data },
-      { name: 'Standard', data: standard_data },
-      { name: 'Pioneer', data: pioneer_data },
-      { name: 'Modern', data: modern_data },
-      { name: 'Pauper', data: pauper_data },
-      { name: 'Legacy', data: legacy_data }
-    ]
+  def prepare_stonks_graph_data(card)
+    # TODO
   end
 end
