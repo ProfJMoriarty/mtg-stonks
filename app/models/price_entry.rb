@@ -11,5 +11,5 @@
 #  updated_at :datetime         not null
 #
 class PriceEntry < ApplicationRecord
-  belongs_to :card
+  belongs_to :card, foreign_key: :card_id
 end

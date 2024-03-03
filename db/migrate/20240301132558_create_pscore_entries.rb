@@ -6,7 +6,7 @@ class CreatePscoreEntries < ActiveRecord::Migration[7.1]
       t.float :modern
       t.float :pauper
       t.float :pioneer
-      t.belongs_to :card
+      t.references :card
 
       t.timestamps
     end

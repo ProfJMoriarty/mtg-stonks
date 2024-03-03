@@ -4,7 +4,7 @@ class CreatePriceEntries < ActiveRecord::Migration[7.1]
       t.float :usd
       t.float :eur
       t.float :tix
-      t.belongs_to :card
+      t.references :card
 
       t.timestamps
     end
