@@ -46,7 +46,7 @@ rails import:file['path/to/the/file']
 ### Importing the latest available scryfall dump
 
 ```bash
-rails import:latest
+rails import:bulk_data
 ```
 
 ### Crawling tournament data

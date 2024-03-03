@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CardsHelper
   def pricetag(price)
     return '-' if price.nil?

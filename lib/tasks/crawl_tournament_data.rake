@@ -168,8 +168,3 @@ def additive_merge(hash1, hash2)
 
   new_hash
 end
-# rubocop:enable Metrics/MethodLength
-# rubocop:enable Metrics/AbcSize
-# rubocop:enable Metrics/CyclomaticComplexity
-# rubocop:enable Metrics/PerceivedComplexity
-# rubocop:enable Metrics/BlockLength

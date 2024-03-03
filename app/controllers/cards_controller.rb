@@ -2,14 +2,12 @@ class CardsController < ApplicationController
   before_action :set_scryfall_client, only: :show
 
   def index
-    # only 100 # for ui testing
-    @cards = Card.with_pscore_entries.take(100)
+    @cards = Card.with_pscore_entries
     standard_cards = Card.with_format(:standard)
     pioneer_cards = Card.with_format(:pioneer)
     modern_cards = Card.with_format(:modern)
     pauper_cards = Card.with_format(:pauper)
     legacy_cards = Card.with_format(:legacy)
-    # most played cards across formats
 
     @most_played_cards = {
       all: @cards.sort { |a, b| b.rank <=> a.rank }.take(10),
@@ -23,11 +21,9 @@ class CardsController < ApplicationController
 
   # GET /cards/stonks
   def stonks
-    # only 100 # for ui testing
-    @cards = Card.with_pscore_entries.take(100).sort do |a, b|
+    @cards = Card.with_pscore_entries.sort do |a, b|
       b.overall_stonks <=> a.overall_stonks
     end
-    # top risers and fallers
 
     @stonkiest_cards = @cards.take(10)
     @stinkiest_cards = @cards.reverse.take(10)
@@ -66,7 +62,7 @@ class CardsController < ApplicationController
       [se.created_at, (se.pscore_of_format(format: :standard) * 1000).round(1)]
     end
     pioneer_data = card.last_n_pscores.map do |se|
-      [se.created_at, (se.pscore_of_format(format: :pionner) * 1000).round(1)]
+      [se.created_at, (se.pscore_of_format(format: :pioneer) * 1000).round(1)]
     end
     modern_data = card.last_n_pscores.map do |se|
       [se.created_at, (se.pscore_of_format(format: :modern) * 1000).round(1)]
@@ -80,7 +76,7 @@ class CardsController < ApplicationController
 
     graph_data = []
 
-    graph_data << { name: 'All fomrats', data: all_format_pscore_data }
+    graph_data << { name: 'All formats', data: all_format_pscore_data }
     graph_data << { name: 'Standard', data: standard_data } if standard_data.map(&:last).sum.positive?
     graph_data << { name: 'Pioneer', data: pioneer_data } if pioneer_data.map(&:last).sum.positive?
     graph_data << { name: 'Modern', data: modern_data } if modern_data.map(&:last).sum.positive?
