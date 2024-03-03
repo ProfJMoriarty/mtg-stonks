@@ -9,6 +9,6 @@
     = render 'shared/score_ticker_box', context: 'Pauper', delta: card.format_pscore_trend(format: :pauper), score: card.format_pscore(format: :pauper)
     = render 'shared/score_ticker_box', context: 'Legacy', delta: card.format_pscore_trend(format: :legacy), score: card.format_pscore(format: :legacy)
   .prices.flex
-    = render 'shared/price_ticker_box', context: '€', delta: card.currency_price_trend(currency: :eur), score: card.latest_prices.eur
-    = render 'shared/price_ticker_box', context: '$', delta: card.currency_price_trend(currency: :usd), score: card.latest_prices.usd
-    = render 'shared/price_ticker_box', context: 'tix', delta: card.currency_price_trend(currency: :tix), score: card.latest_prices.tix
+    = render 'shared/price_ticker_box', context: '€', delta: card.currency_price_trend(currency: :eur), score: card.latest_prices.eur, currency: 'eur'
+    = render 'shared/price_ticker_box', context: '$', delta: card.currency_price_trend(currency: :usd), score: card.latest_prices.usd, currency: 'usd'
+    = render 'shared/price_ticker_box', context: 'tix', delta: card.currency_price_trend(currency: :tix), score: card.latest_prices.tix, currency: 'tix'

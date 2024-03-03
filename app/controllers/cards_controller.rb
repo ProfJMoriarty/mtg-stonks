@@ -38,6 +38,14 @@ class CardsController < ApplicationController
     @card = Card.find(params[:id])
     @image_link = @scryfall_client.image_url(@card.name)
     @pscore_graph_data = prepare_pscore_graph_data(@card)
+    @stonks_graph_data = prepare_stonks_graph_data(@card)
+  end
+
+  # POST /card/:query
+  def search
+    @query = params[:query]
+    card = Card.find_by(name: @query)
+    redirect_to card_path(card)
   end
 
   private
@@ -52,7 +60,7 @@ class CardsController < ApplicationController
     @scryfall_client = ScryfallApi::Client.new
   end
 
-  def prepare_pscore_graph_data(card) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+  def prepare_pscore_graph_data(card) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
     all_format_pscore_data = card.last_n_pscores.map { |se| [se.created_at, (se.aggregated_pscore * 1000).round(1)] }
     standard_data = card.last_n_pscores.map do |se|
       [se.created_at, (se.pscore_of_format(format: :standard) * 1000).round(1)]
@@ -69,7 +77,38 @@ class CardsController < ApplicationController
     legacy_data = card.last_n_pscores.map do |se|
       [se.created_at, (se.pscore_of_format(format: :legacy) * 1000).round(1)]
     end
-    @pscore_graph_data = [
+
+    graph_data = []
+
+    graph_data << { name: 'All fomrats', data: all_format_pscore_data }
+    graph_data << { name: 'Standard', data: standard_data } if standard_data.map(&:last).sum.positive?
+    graph_data << { name: 'Pioneer', data: pioneer_data } if pioneer_data.map(&:last).sum.positive?
+    graph_data << { name: 'Modern', data: modern_data } if modern_data.map(&:last).sum.positive?
+    graph_data << { name: 'Pauper', data: pauper_data } if pauper_data.map(&:last).sum.positive?
+    graph_data << { name: 'Legacy', data: legacy_data } if legacy_data.map(&:last).sum.positive?
+
+    graph_data
+  end
+
+  def prepare_stonks_graph_data(card) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+    all_format_pscore_data = card.last_n_pscores.map { |se| [se.created_at, (se.aggregated_pscore * 1000).round(1)] }
+    standard_data = card.last_n_pscores.map do |se|
+      [se.created_at, (se.pscore_of_format(format: :standard) * 1000).round(1)]
+    end
+    pioneer_data = card.last_n_pscores.map do |se|
+      [se.created_at, (se.pscore_of_format(format: :pionner) * 1000).round(1)]
+    end
+    modern_data = card.last_n_pscores.map do |se|
+      [se.created_at, (se.pscore_of_format(format: :modern) * 1000).round(1)]
+    end
+    pauper_data = card.last_n_pscores.map do |se|
+      [se.created_at, (se.pscore_of_format(format: :pauper) * 1000).round(1)]
+    end
+    legacy_data = card.last_n_pscores.map do |se|
+      [se.created_at, (se.pscore_of_format(format: :legacy) * 1000).round(1)]
+    end
+
+    [
       { name: 'All fomrats', data: all_format_pscore_data },
       { name: 'Standard', data: standard_data },
       { name: 'Pioneer', data: pioneer_data },

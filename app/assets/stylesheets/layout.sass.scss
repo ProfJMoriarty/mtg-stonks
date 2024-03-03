@@ -16,7 +16,8 @@ body {
         height: 80px;
         line-height: 80px;
         font-size: 15pt;
-        padding-left: 2rem;
+        box-sizing: border-box;
+        padding: 0 2rem;
         background-color: black;
         color: white;
 
@@ -37,10 +38,33 @@ body {
             }
 
         }
+
+        .searchbar {
+            input[type=text] {
+                height: 50px;
+                line-height: 50px;
+                width: 270px;
+                padding: 1rem 1.5rem;
+                box-sizing: border-box;
+                border-radius: 25px;
+                border: none;
+                background-color: rgba(255, 255, 255, 0.1);
+                color: white;
+                font-size: 12pt;
+
+                &::placeholder {
+                    color: rgba(255, 255, 255, 0.3)
+                }
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
     }
 
     main {
-        padding: calc(1rem + 80px) 2rem 300px 2rem;
+        padding: calc(2rem + 80px) 2rem 130px 2rem;
     }
 
     footer {

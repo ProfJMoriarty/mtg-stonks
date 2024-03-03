@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   controller :cards do
     get 'stonks', :stonks
+    post 'search', :search
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

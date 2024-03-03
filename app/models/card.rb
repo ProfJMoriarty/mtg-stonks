@@ -19,6 +19,8 @@ class Card < ApplicationRecord
 
   def rank
     scores = last_n_pscores(num: 10)
+    return 0.0 if scores.empty?
+
     scores.map(&:aggregated_pscore).sum / scores.size
   end
 
@@ -38,13 +40,15 @@ class Card < ApplicationRecord
 
   def format_pscore(format:)
     scores = last_n_pscores(num: 10)
+    return 0.0 if scores.empty?
+
     scores.map { |score| score.pscore_of_format(format:) }.sum / scores.size
   end
 
   def format_pscore_trend(format:, num: 10)
     num = num.positive? ? num : 1
-    old_score = n_to_last_pscore(num:).pscore_of_format(format:)
-    newest_score = latest_pscores.pscore_of_format(format:)
+    old_score = n_to_last_pscore(num:)&.pscore_of_format(format:) || 0.0
+    newest_score = latest_pscores&.pscore_of_format(format:) || 0.0
     old_score - newest_score
   end
 
@@ -81,14 +85,14 @@ class Card < ApplicationRecord
     end.sum / 3
   end
 
-  def format_stonks(format:, num: 5)
-    num = num.positive? ? num : 1
+  # Pscore * price trend
+  def format_stonks(format:)
     return 0.0 if overall_price_trend.zero?
 
-    format_pscore_trend(format:, num:) * overall_price_trend
+    format_pscore(format:) * overall_price_trend
   end
 
-  def format_stonks_trend(format:, num: 5); end
+  def format_stonks_trend(format:, num: 10); end
 
   # stonk score over all formats
   def overall_stonks
