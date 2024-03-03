@@ -6,7 +6,6 @@ require 'open-uri'
 namespace :import do
   desc 'Import json bulk data'
   task bulk_data: :environment do
-    Rails.logger.info "=== Importing from json dump ==="
 
     res = HTTParty.get('https://api.scryfall.com/bulk-data')
     dumps = JSON.parse(res.body)['data']
@@ -14,20 +13,36 @@ namespace :import do
 
     file = File.read URI.open(file_path) # rubocop:disable Security/Open
 
+    create_entries(JSON.parse file)
+
+  end
+
+  desc 'Import json bulk data'
+  task :file, [:file_path] => :environment do |_task, args|
+    Rails.logger.info '=== Importing from json dump ==='
+
+    file = File.read args[:file_path]
+    create_entries(JSON.parse file)
+  end
+
+  def create_entries(json_cards)
     batch_size = 2_000
     start_time = Time.now
+    # TODO is legal in any of the 5 formats
+    # TODO is token type_line starts with 'Token'?
 
-    json_cards = JSON.parse file
     Rails.logger.info "Parsed #{json_cards.count} cards. Importing new ones..."
 
     shortened_cards = json_cards.map{|c| {oracle_id: c['oracle_id'], name: c['name']}}
     price_json = json_cards.map{|c| {oracle_id: c['oracle_id'], prices: c['prices']}}
-    Card.upsert_all(
-      shortened_cards
-    )
+    shortened_cards.each do |shortened_card|
+      Card.find_or_create_by(oracle_id: shortened_card[:oracle_id]) do |card|
+        card.name = shortened_card[:name]
+      end
+    end
     Rails.logger.info "Imported #{shortened_cards.count} cards"
 
-    Rails.logger.info "Updating prices for cards"
+    Rails.logger.info 'Updating prices for cards'
     price_json.each_slice(batch_size) do |parsed_cards|
       price_count = 0
       card_prices = []
@@ -43,6 +58,4 @@ namespace :import do
     end
     Rails.logger.info "Done in #{Time.now - start_time}s. Imported #{shortened_cards.count} new cards in total."
   end
-
-  # TODO: add tasks to this namespace that do this with the scryfall api and not a fixture
 end
