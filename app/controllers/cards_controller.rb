@@ -10,7 +10,7 @@ class CardsController < ApplicationController
     legacy_cards = Card.with_format(:legacy)
 
     @most_played_cards = {
-      all: @cards.sort { |a, b| b.rank <=> a.rank }.take(10),
+      all: @cards.sort { |a, b| b.average_pscore <=> a.average_pscore}.take(10),
       standard: sort_for_format(:standard, standard_cards),
       pioneer: sort_for_format(:pioneer, pioneer_cards),
       modern: sort_for_format(:modern, modern_cards),

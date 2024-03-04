@@ -17,7 +17,7 @@ class Card < ApplicationRecord
   scope :with_pscore_entries, -> { joins(:pscore_entries).distinct }
   scope :with_format, ->(format) { with_pscore_entries.where.not("pscore_entries.#{format}" => nil).distinct }
 
-  def rank
+  def average_pscore
     scores = last_n_pscores(num: 10)
     return 0.0 if scores.empty?
 
@@ -49,10 +49,17 @@ class Card < ApplicationRecord
     num = num.positive? ? num : 1
     old_score = n_to_last_pscore(num:)&.pscore_of_format(format:) || 0.0
     newest_score = latest_pscores&.pscore_of_format(format:) || 0.0
-    old_score - newest_score
+    binding.pry
+    newest_score - old_score
   end
 
-  def overall_pscore_trend
+  def overall_pscore_trend(num: 10)
+    old_score = n_to_last_pscore(num:).aggregated_pscore
+    newest_score = average_pscore
+    newest_score - old_score
+  end
+
+  def overall_rank_trend
     %i[standard pioneer modern pauper legacy].map do |format|
       format_pscore_trend(format:)
     end.sum / 5
@@ -76,7 +83,7 @@ class Card < ApplicationRecord
     num = num.positive? ? num : 1
     old_price = n_to_last_price(num:).value_of_currency(currency:)
     newest_price = latest_prices.value_of_currency(currency:)
-    old_price - newest_price
+    newest_price - old_price
   end
 
   def overall_price_trend
@@ -87,8 +94,6 @@ class Card < ApplicationRecord
 
   # Pscore * price trend
   def format_stonks(format:)
-    return 0.0 if overall_price_trend.zero?
-
     format_pscore(format:) * overall_price_trend
   end
 
@@ -96,8 +101,6 @@ class Card < ApplicationRecord
 
   # stonk score over all formats
   def overall_stonks
-    return 0.0 if overall_price_trend.zero?
-
     overall_pscore_trend * overall_price_trend
   end
 end

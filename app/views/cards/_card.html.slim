@@ -16,13 +16,15 @@
         = line_chart @pscore_graph_data, ytitle: 'Playability'
       p.center-text Latest playabilty-score averages
       .scores.flex
-        = render 'shared/score_ticker_box', context: 'Overall', delta: card.overall_pscore_trend, score: card.rank
+        = render 'shared/score_ticker_box', context: 'Overall', delta: card.overall_pscore_trend, score: card.average_pscore
         = render 'shared/score_ticker_box', context: 'Standard', delta: card.format_pscore_trend(format: :standard), score: card.format_pscore(format: :standard)
         = render 'shared/score_ticker_box', context: 'Pioneer', delta: card.format_pscore_trend(format: :pioneer), score: card.format_pscore(format: :pioneer)
         = render 'shared/score_ticker_box', context: 'Modern', delta: card.format_pscore_trend(format: :modern), score: card.format_pscore(format: :modern)
         = render 'shared/score_ticker_box', context: 'Pauper', delta: card.format_pscore_trend(format: :pauper), score: card.format_pscore(format: :pauper)
         = render 'shared/score_ticker_box', context: 'Legacy', delta: card.format_pscore_trend(format: :legacy), score: card.format_pscore(format: :legacy)
 
+
+      / TODO
       / h3 Latest Stonks
       / .scores.flex
         / = render 'shared/score_ticker_box', context: "Overall", delta: card.overall_pscore_trend, score: card.overall_stonks
