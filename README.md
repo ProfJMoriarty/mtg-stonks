@@ -2,7 +2,7 @@
 
 This is a stonks app for mtg cards. The product: A playability index, calculated for each card. The better its price / playability ratio, the higher its stonks.
 
-# Setup
+## Setup
 
 Dependencies:
 
@@ -32,4 +32,25 @@ and finally
 
 ```bash
 rails db:prepare
+```
+
+## Importing data
+
+### Importing a scryfall dump (file)
+
+```bash
+rails import:file['path/to/the/file']
+```
+**Note:** On macos, escape the square brackets with `\`
+
+### Importing the latest available scryfall dump
+
+```bash
+rails import:bulk_data
+```
+
+### Crawling tournament data
+
+```bash
+rails crawl:tournament_data
 ```

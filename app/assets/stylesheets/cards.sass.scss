@@ -1,0 +1,117 @@
+.card {
+  background-color: white;
+  padding: .5rem;
+  margin: 0 auto;
+  margin-bottom: .5rem;
+  border-radius: 10px;
+  width: fit-content;
+
+  .title {
+    font-family: 'Matrix';
+    font-size: 25pt;
+  }
+
+  .card-image {
+    padding: 1rem;
+    padding-bottom: 0;
+
+    img {
+      width: 340px;
+      border-radius: 15px;
+    }
+  }
+
+  .card-data {
+    padding: 2rem 1rem 1rem 1rem;
+
+    .graph {
+      margin: 2rem 2rem 3.3rem 0;
+    }
+  }
+
+  .name {
+    width: 450px;
+
+    a.card-link {
+      text-decoration: none;
+      color: black;
+      font-family: 'Matrix';
+      font-size: 15pt;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .delta-tag {
+    font-size: 9pt;
+  }
+
+  .name,
+  .scores,
+  .prices {
+    .delta-tag {
+      overflow: hidden;
+      background-color: #e9e9e9;
+      border-radius: 3px;
+      text-align: center;
+      padding-top: .4rem;
+
+      span {
+        padding: .4rem .6rem;
+        margin-top: .4rem;
+        min-width: 35px;
+        text-align: center;
+
+        &:nth-last-child(2) {
+          text-align: center;
+
+          &.stonk {
+            color: rgb(60, 150, 60);
+            background-color: rgb(188, 207, 184);
+          }
+
+          &.stink {
+            color: rgb(210, 90, 90);
+            background-color: rgb(222, 192, 191);
+          }
+        }
+
+        &:last-child {
+          text-align: center;
+          color: white;
+          background-color: #939393;
+        }
+      }
+    }
+  }
+
+  .prices {
+    .delta-tag {
+      &.eur {
+        .label {
+          color: #8B3F8A;
+        }
+
+        background-color: #8B3F8A20;
+      }
+
+      &.usd {
+        .label {
+          color: #006885;
+        }
+
+        background-color: #00688520;
+      }
+
+      &.tix {
+        .label {
+          color: #DA4100;
+        }
+
+        background-color: #DA410020;
+      }
+    }
+  }
+}

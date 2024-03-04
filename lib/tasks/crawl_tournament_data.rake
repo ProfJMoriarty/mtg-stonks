@@ -12,17 +12,12 @@ BASIC_LAND_NAMES = %w[Plains Island Swamp Mountain Forest].freeze
 # dummy tournament for debugging
 # MTGO_TOURNAMENT_URL = "#{MTGO_BASE_URL}/standard-challenge-32-2024-02-2412615346".freeze
 
-# rubocop:disable Metrics/MethodLength
-# rubocop:disable Metrics/AbcSize
-# rubocop:disable Metrics/CyclomaticComplexity
-# rubocop:disable Metrics/PerceivedComplexity
-# rubocop:disable Metrics/BlockLength
 namespace :crawl do
   desc 'Import json bulk data'
   task tournament_data: :environment do
     puts '=== Crawling for tournament data... ==='
 
-    todays_day = DateTime.new(2024, 3, 1).strftime('%d')
+    todays_day = DateTime.now.strftime('%d')
     puts "fetching todays (#{todays_day}) tournaments"
     todays_tournaments = []
 
@@ -173,8 +168,3 @@ def additive_merge(hash1, hash2)
 
   new_hash
 end
-# rubocop:enable Metrics/MethodLength
-# rubocop:enable Metrics/AbcSize
-# rubocop:enable Metrics/CyclomaticComplexity
-# rubocop:enable Metrics/PerceivedComplexity
-# rubocop:enable Metrics/BlockLength

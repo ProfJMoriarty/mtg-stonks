@@ -12,4 +12,8 @@
 #
 class PriceEntry < ApplicationRecord
   belongs_to :card, foreign_key: :card_id
+
+  def value_of_currency(currency:)
+    read_attribute(currency) || 0.0
+  end
 end

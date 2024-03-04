@@ -1,0 +1,6 @@
+.delta-tag class=(currency)
+  .label = context
+  .flex.gap-0
+    span class=(delta_color(price_delta_tag(delta)))
+      = price_delta_tag(delta)
+    span = pricetag(score)

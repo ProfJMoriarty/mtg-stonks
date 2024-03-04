@@ -14,4 +14,22 @@
 #
 class PscoreEntry < ApplicationRecord
   belongs_to :card, foreign_key: :card_id
+
+  def aggregated_pscore
+    standard_score = standard || 0.0
+    pioneer_score = pioneer || 0.0
+    modern_score = modern || 0.0
+    pauper_score = pauper || 0.0
+    legacy_score = legacy || 0.0
+    all_scores = [standard_score, pioneer_score, modern_score, pauper_score, legacy_score].sort
+    sum = all_scores.sum
+    mean = sum / 5
+    median = all_scores[3]
+
+    (mean + median) / 2
+  end
+
+  def pscore_of_format(format:)
+    read_attribute(format) || 0.0
+  end
 end

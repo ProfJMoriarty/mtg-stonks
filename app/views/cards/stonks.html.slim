@@ -1,0 +1,11 @@
+h3.center-text Top stonkers
+p.center-text The cards who have gained the most stonks this week
+#stonked-cards.mb-3rem
+  - @stonkiest_cards.each_with_index do |card, index|
+    = render 'stonkability_view', card:, index:
+
+h3.center-text Top stinkers
+p.center-text The cards who have lost the most stonks this week   
+#stinked-cards 
+  - @stinkiest_cards.each_with_index do |card, index|
+    = render 'stonkability_view', card:, index:

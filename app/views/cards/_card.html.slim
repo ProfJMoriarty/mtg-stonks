@@ -1,0 +1,35 @@
+.card
+  .flex.align-start
+    .card-image
+      img src=(@image_link)
+      p.center-text Prices
+      .prices.flex.mb-1rem
+        = render 'shared/price_ticker_box', context: '€', delta: card.currency_price_trend(currency: :eur), score: card.latest_prices.eur, currency: 'eur'
+        = render 'shared/price_ticker_box', context: '$', delta: card.currency_price_trend(currency: :usd), score: card.latest_prices.usd, currency: 'usd'
+        = render 'shared/price_ticker_box', context: 'tix', delta: card.currency_price_trend(currency: :tix), score: card.latest_prices.tix, currency: 'tix'
+
+    .card-data
+      .title.mb-3rem = card.name 
+
+      p.center-text Latest Playability Scores
+      .graph 
+        = line_chart @pscore_graph_data, ytitle: 'Playability'
+      p.center-text Latest playabilty-score averages
+      .scores.flex
+        = render 'shared/score_ticker_box', context: 'Overall', delta: card.overall_pscore_trend, score: card.average_pscore
+        = render 'shared/score_ticker_box', context: 'Standard', delta: card.format_pscore_trend(format: :standard), score: card.format_pscore(format: :standard)
+        = render 'shared/score_ticker_box', context: 'Pioneer', delta: card.format_pscore_trend(format: :pioneer), score: card.format_pscore(format: :pioneer)
+        = render 'shared/score_ticker_box', context: 'Modern', delta: card.format_pscore_trend(format: :modern), score: card.format_pscore(format: :modern)
+        = render 'shared/score_ticker_box', context: 'Pauper', delta: card.format_pscore_trend(format: :pauper), score: card.format_pscore(format: :pauper)
+        = render 'shared/score_ticker_box', context: 'Legacy', delta: card.format_pscore_trend(format: :legacy), score: card.format_pscore(format: :legacy)
+
+
+      / TODO
+      / h3 Latest Stonks
+      / .scores.flex
+        / = render 'shared/score_ticker_box', context: "Overall", delta: card.overall_pscore_trend, score: card.overall_stonks
+        / = render 'shared/score_ticker_box', context: 'Standard', delta: card.format_pscore_trend(format: :standard), score: card.format_stonks(format: :standard)
+        / = render 'shared/score_ticker_box', context: 'Pioneer', delta: card.format_pscore_trend(format: :pioneer), score: card.format_stonks(format: :pioneer)
+        / = render 'shared/score_ticker_box', context: 'Modern', delta: card.format_pscore_trend(format: :modern), score: card.format_stonks(format: :modern)
+        / = render 'shared/score_ticker_box', context: 'Pauper', delta: card.format_pscore_trend(format: :pauper), score: card.format_stonks(format: :pauper)
+        / = render 'shared/score_ticker_box', context: 'Legacy', delta: card.format_pscore_trend(format: :legacy), score: card.format_stonks(format: :legacy)

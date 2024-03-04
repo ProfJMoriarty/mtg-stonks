@@ -1,13 +1,27 @@
-!DOCTYPE html
+doctype html
 html
   head
-    title = MtgStonks
+    title = "Dockside Stock Market"
     meta name="viewport" content="width=device-width,initial-scale=1"
     = csrf_meta_tags
     = csp_meta_tag
 
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload"
 
   body
-    = yield
+    nav
+      .flex.justify-between
+        .flex
+          .title Dockside Stock Market
+          .links
+            = link_to 'Playabilty', cards_path, class: "item #{'active' if current_page?(controller: :cards, action: :index)}"
+            = link_to 'Stonks', stonks_path, class: "item #{'active' if current_page?(controller: :cards, action: :stonks)}"
+        .searchbar 
+          = form_with url: search_path, method: :post do |f|
+            = f.text_field :query, placeholder: 'Search for card...'
+            = f.submit class: 'button hidden'
+
+    main = yield
+    footer powered by Scryfall
   
