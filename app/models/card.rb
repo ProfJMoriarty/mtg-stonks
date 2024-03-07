@@ -49,7 +49,6 @@ class Card < ApplicationRecord
     num = num.positive? ? num : 1
     old_score = n_to_last_pscore(num:)&.pscore_of_format(format:) || 0.0
     newest_score = latest_pscores&.pscore_of_format(format:) || 0.0
-    binding.pry
     newest_score - old_score
   end
 
