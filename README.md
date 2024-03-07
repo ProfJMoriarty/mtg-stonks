@@ -51,6 +51,20 @@ rails import:bulk_data
 
 ### Crawling tournament data
 
+To import yesterday's tournaments, do
+
 ```bash
 rails crawl:tournament_data
+```
+
+For a specific tournament day, do
+
+```bash
+rails crawl:tournament_data['year','month','day']
+```
+
+For an entire month of tournaments (very slow, not recommended), do
+
+```bash
+rails crawl:tournament_data['year','month',]
 ```
