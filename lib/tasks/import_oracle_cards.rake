@@ -36,7 +36,10 @@ namespace :import do
       FORMATS_TO_IMPORT.each do |format|
         legalities << card['legalities'][format.to_s.downcase]
       end
-      legalities.include?('legal') ? legal_cards << card : next
+
+      next unless legalities.include?('legal')
+
+      legal_cards << card
     end
     legal_cards
   end
@@ -44,17 +47,15 @@ namespace :import do
   # Batching prices and inserting them in steps of 2000 entries
   def update_prices(shortened_prices)
     shortened_prices.each_slice(BATCH_SIZE) do |parsed_cards|
-      price_count = 0
       card_prices = []
       parsed_cards.each do |parsed_card|
         card_obj = Card.find_by(oracle_id: parsed_card[:oracle_id])
 
         prices = parsed_card[:prices]
         card_prices << { card_id: card_obj.id, eur: prices['eur'], usd: prices['usd'], tix: prices['tix'] }
-        price_count += 1
       end
       PriceEntry.insert_all(card_prices)
-      Rails.logger.info "Imported prices for batch of #{price_count} cards"
+      Rails.logger.info "Imported prices for batch of #{card_prices.count} cards"
     end
   end
 

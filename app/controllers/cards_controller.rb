@@ -10,7 +10,9 @@ class CardsController < ApplicationController
     legacy_cards = Card.with_format(:legacy)
 
     @most_played_cards = {
-      all: @cards.sort { |a, b| b.average_pscore <=> a.average_pscore }.take(10),
+      all: @cards.sort do |a, b|
+             b.pscore_calculation.pscore_avg7_of_format <=> a.pscore_calculation.pscore_avg7_of_format
+           end.take(10),
       standard: sort_for_format(:standard, standard_cards),
       pioneer: sort_for_format(:pioneer, pioneer_cards),
       modern: sort_for_format(:modern, modern_cards),
@@ -48,7 +50,7 @@ class CardsController < ApplicationController
 
   def sort_for_format(format, cards)
     cards.sort do |a, b|
-      b.format_pscore(format:) <=> a.format_pscore(format:)
+      b.pscore_calculation.pscore_avg7_of_format(format:) <=> a.pscore_calculation.pscore_avg7_of_format(format:)
     end.take(10)
   end
 
@@ -64,7 +66,7 @@ class CardsController < ApplicationController
     pauper_data = []
     legacy_data = []
 
-    card.last_n_pscores(num: 30).map do |se|
+    card.last_n_pscores(num: 7).map do |se|
       all_format_pscore_data << [se.created_at, se.aggregated_pscore.round(1)]
       standard_data << [se.created_at, se.pscore_of_format(format: :standard).round(1)]
       pioneer_data << [se.created_at, se.pscore_of_format(format: :pioneer).round(1)]

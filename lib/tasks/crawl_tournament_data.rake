@@ -95,6 +95,9 @@ namespace :crawl do
     total_decks = tournament_objects.map { |tournament| tournament.decks.count }.sum
     total_cards = tournament_objects.map { |tournament| tournament.decks.map { |deck| deck.cards.count }.sum }.sum
     Rails.logger.info "Imported #{tournament_objects.count} tournaments (#{total_decks} decks, #{total_cards} cards) in #{Time.now - task_start_time}s"
+
+    Rails.logger.info 'Starting calculation of pscores...'
+    PscoreCalculator::Calculator.new.calculate
   end
 end
 
