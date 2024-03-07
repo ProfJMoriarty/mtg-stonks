@@ -4,7 +4,7 @@ require 'httparty'
 require 'open-uri'
 
 BATCH_SIZE = 2_000
-FORMATS = %w[Modern Pioneer Standard Pauper Legacy].freeze
+FORMATS_TO_IMPORT = %w[Modern Pioneer Standard Pauper Legacy].freeze
 
 namespace :import do
   desc 'Import json bulk data'
@@ -33,7 +33,7 @@ namespace :import do
     json_cards.each do |card|
       legalities = []
       # add legality to array for each format for card
-      FORMATS.each do |format|
+      FORMATS_TO_IMPORT.each do |format|
         legalities << card['legalities'][format.to_s.downcase]
       end
       legalities.include?('legal') ? legal_cards << card : next
@@ -74,7 +74,7 @@ namespace :import do
     # Validations
     # 1. remove all Tokens
     # 2. remove all non-legal cards for defined formats (this would also remove tokens since they are never "legal")
-    json_cards = json_cards.select { |card| !card['type_line'].start_with?('Token') }
+    json_cards = json_cards.reject { |card| card['type_line'].start_with?('Token') }
     json_cards = remove_non_legal_cards(json_cards)
 
     # Only use oracle_id and name
